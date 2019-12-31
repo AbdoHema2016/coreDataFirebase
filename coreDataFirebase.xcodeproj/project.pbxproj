@@ -3,26 +3,28 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6C2106A083BB56A1FAA0A5F7 /* Pods_coreDataFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */; };
+		94394C4423BB575B00EF4ADF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */; };
+		94394C4723BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */; };
 		9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C223BB4345007DBF0E /* AppDelegate.swift */; };
 		9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C423BB4345007DBF0E /* ViewController.swift */; };
 		9451D0C823BB4345007DBF0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0C623BB4345007DBF0E /* Main.storyboard */; };
-		9451D0CB23BB4345007DBF0E /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C923BB4345007DBF0E /* coreDataFirebase.xcdatamodeld */; };
 		9451D0CD23BB4345007DBF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CC23BB4345007DBF0E /* Assets.xcassets */; };
 		9451D0D023BB4345007DBF0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreDataFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		9451D0BF23BB4345007DBF0E /* coreDataFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreDataFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9451D0C223BB4345007DBF0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9451D0C423BB4345007DBF0E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9451D0C723BB4345007DBF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9451D0CA23BB4345007DBF0E /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		9451D0CC23BB4345007DBF0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9451D0CF23BB4345007DBF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9451D0D123BB4346007DBF0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,13 +73,14 @@
 		9451D0C123BB4345007DBF0E /* coreDataFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */,
 				9451D0C223BB4345007DBF0E /* AppDelegate.swift */,
 				9451D0C423BB4345007DBF0E /* ViewController.swift */,
 				9451D0C623BB4345007DBF0E /* Main.storyboard */,
 				9451D0CC23BB4345007DBF0E /* Assets.xcassets */,
 				9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */,
+				94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */,
 				9451D0D123BB4346007DBF0E /* Info.plist */,
-				9451D0C923BB4345007DBF0E /* coreDataFirebase.xcdatamodeld */,
 			);
 			path = coreDataFirebase;
 			sourceTree = "<group>";
@@ -88,7 +91,6 @@
 				98D5FA9B9751D95B5A69BDE9 /* Pods-coreDataFirebase.debug.xcconfig */,
 				B76A45949F0AC3E617BF82B9 /* Pods-coreDataFirebase.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -155,6 +157,7 @@
 				9451D0D023BB4345007DBF0E /* LaunchScreen.storyboard in Resources */,
 				9451D0CD23BB4345007DBF0E /* Assets.xcassets in Resources */,
 				9451D0C823BB4345007DBF0E /* Main.storyboard in Resources */,
+				94394C4423BB575B00EF4ADF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */,
-				9451D0CB23BB4345007DBF0E /* coreDataFirebase.xcdatamodeld in Sources */,
+				94394C4723BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld in Sources */,
 				9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,12 +414,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9451D0C923BB4345007DBF0E /* coreDataFirebase.xcdatamodeld */ = {
+		94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9451D0CA23BB4345007DBF0E /* coreDataFirebase.xcdatamodel */,
+				94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */,
 			);
-			currentVersion = 9451D0CA23BB4345007DBF0E /* coreDataFirebase.xcdatamodel */;
+			currentVersion = 94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */;
 			path = coreDataFirebase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

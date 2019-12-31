@@ -8,16 +8,25 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 class ViewController: UIViewController {
 
+    //MARK: - Outlets
     @IBOutlet weak var btnAddCategory: UIBarButtonItem!
     @IBOutlet weak var categoryTableView: UITableView!
+    
+    //MARK: - Variables
     var categories = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var ref: DatabaseReference!
+    
+    //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        ref = Database.database().reference()
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         
         loadCategories()
@@ -37,7 +46,9 @@ class ViewController: UIViewController {
             newCategory.title = textField.text!
             newCategory.isSynced = "No"
             self.categories.append(newCategory)
-            self.saveCategories()
+            
+            
+            self.saveCategories(category: newCategory)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new Category"
@@ -49,19 +60,39 @@ class ViewController: UIViewController {
     }
     
     //MARK: - CoreData Flow Methods
-    func saveCategories(){
+    func saveCategories(category: Category){
         do {
             try context.save()
+            
+            self.ref.child("Categories").childByAutoId().setValue(["title": category.title,"isSynced":"Yes"]) { (error, ref) in
+                    guard error == nil else {
+                        print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
+                    return
+                }
+                self.updateCategories(category: category)
+            }
+            
+            
         } catch {
             print("Error saving categories \(error)")
         }
         
         categoryTableView.reloadData()
     }
+    func updateCategories(category: Category){
+        category.isSynced = "Yes"
+        do {
+            try context.save()
+            
+        } catch {
+            
+        }
+    }
     
     func loadCategories(with request:NSFetchRequest<Category> = Category.fetchRequest()){
         
-        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
+        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "Yes")
+       // request.fetchLimit = 2
         request.predicate = predicate
         
         do {
