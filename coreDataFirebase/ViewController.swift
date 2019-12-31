@@ -63,7 +63,6 @@ class ViewController: UIViewController {
     func saveCategories(category: Category, nodeId: String? = nil){
         do {
             try context.save()
-            print(category.objectID.accessibilityValue)
             category.isSynced = "Yes"
             var nodeID = ref.childByAutoId().key
             if nodeId != nil {
@@ -72,6 +71,7 @@ class ViewController: UIViewController {
             
             self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced]) { (error, ref) in
                     guard error == nil else {
+                        
                         print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
                     return
                 }
@@ -102,10 +102,30 @@ class ViewController: UIViewController {
         
         do {
             categories = try context.fetch(request)
+            categoryTableView.reloadData()
             fetchFirebase()
+            sendNonSyncedData()
+            
             
         } catch {
             print("error loading data \(error)")
+        }
+        
+    }
+    
+    func sendNonSyncedData(){
+        let request : NSFetchRequest<Category> = Category.fetchRequest()
+        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
+        request.predicate = predicate
+        var nonSynced = [Category]()
+        do {
+            nonSynced = try context.fetch(request)
+            for category in nonSynced {
+                saveCategories(category: category)
+            }
+            
+        } catch {
+            print("Can't save mobile saved data\(error)")
         }
         
     }
@@ -130,7 +150,7 @@ class ViewController: UIViewController {
                 }
             }
         })
-        categoryTableView.reloadData()
+        
     }
     
     func checkifExists(category: Category,nodeID:String){
