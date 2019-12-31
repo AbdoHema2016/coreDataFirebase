@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     func saveCategories(category: Category, nodeId: String? = nil){
         do {
             try context.save()
-            category.isSynced = "Yes"
+            
             var nodeID = ref.childByAutoId().key
             if nodeId != nil {
                 nodeID = nodeId
@@ -86,6 +86,7 @@ class ViewController: UIViewController {
         categoryTableView.reloadData()
     }
     func updateCategories(category: Category){
+        category.isSynced = "yes"
         do {
             try context.save()
             
@@ -96,9 +97,9 @@ class ViewController: UIViewController {
     
     func loadCategories(with request:NSFetchRequest<Category> = Category.fetchRequest()){
         
-        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "Yes")
+        //let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "Yes")
        // request.fetchLimit = 2
-        request.predicate = predicate
+        //request.predicate = predicate
         
         do {
             categories = try context.fetch(request)
@@ -142,7 +143,7 @@ class ViewController: UIViewController {
                     let categoryTitle = categoryDict["title"] ?? ""
                     let newCategory = Category(context: self.context)
                     newCategory.title = categoryTitle
-                    newCategory.isSynced = "yes"
+                    newCategory.isSynced = "Yes"
                     let nodeId = categorySnap.key
                     self.checkifExists(category: newCategory,nodeID:nodeId)
                     
