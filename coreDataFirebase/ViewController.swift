@@ -116,7 +116,7 @@ class ViewController: UIViewController {
                 let categorySnap = snap as! DataSnapshot
                 let categoryDict = categorySnap.value as! [String:String]
                 guard let categorySyncStatus = categoryDict["isSynced"] else {return}
-                
+                //TODO: - updating item in firebase rewrites on core data
                 if categorySyncStatus == "No" {
                     
                     let categoryTitle = categoryDict["title"] ?? ""
@@ -124,12 +124,27 @@ class ViewController: UIViewController {
                     newCategory.title = categoryTitle
                     newCategory.isSynced = "yes"
                     let nodeId = categorySnap.key
-                    self.categories.append(newCategory)
-                    self.saveCategories(category: newCategory,nodeId: nodeId)
+                    self.checkifExists(category: newCategory,nodeID:nodeId)
+                    
 
                 }
             }
         })
+        categoryTableView.reloadData()
+    }
+    
+    func checkifExists(category: Category,nodeID:String){
+        
+        for checkCategory in categories {
+            if checkCategory.title == category.title{
+                context.delete(checkCategory)
+                
+                categories.remove(at: categories.index(of: checkCategory)!)
+                
+            }
+        }
+        self.categories.append(category)
+        self.saveCategories(category: category,nodeId: nodeID)
         categoryTableView.reloadData()
     }
 
