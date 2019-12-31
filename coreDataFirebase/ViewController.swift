@@ -60,11 +60,17 @@ class ViewController: UIViewController {
     }
     
     //MARK: - CoreData Flow Methods
-    func saveCategories(category: Category){
+    func saveCategories(category: Category, nodeId: String? = nil){
         do {
             try context.save()
+            print(category.objectID.accessibilityValue)
+            category.isSynced = "Yes"
+            var nodeID = ref.childByAutoId().key
+            if nodeId != nil {
+                nodeID = nodeId
+            }
             
-            self.ref.child("Categories").childByAutoId().setValue(["title": category.title,"isSynced":"Yes"]) { (error, ref) in
+            self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced]) { (error, ref) in
                     guard error == nil else {
                         print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
                     return
@@ -80,7 +86,6 @@ class ViewController: UIViewController {
         categoryTableView.reloadData()
     }
     func updateCategories(category: Category){
-        category.isSynced = "Yes"
         do {
             try context.save()
             
@@ -97,11 +102,35 @@ class ViewController: UIViewController {
         
         do {
             categories = try context.fetch(request)
-            categoryTableView.reloadData()
+            fetchFirebase()
+            
         } catch {
             print("error loading data \(error)")
         }
         
+    }
+    
+    func fetchFirebase(){
+        ref.child("Categories").observeSingleEvent(of: .value, with: { (snapshot) in
+            for snap in snapshot.children {
+                let categorySnap = snap as! DataSnapshot
+                let categoryDict = categorySnap.value as! [String:String]
+                guard let categorySyncStatus = categoryDict["isSynced"] else {return}
+                
+                if categorySyncStatus == "No" {
+                    
+                    let categoryTitle = categoryDict["title"] ?? ""
+                    let newCategory = Category(context: self.context)
+                    newCategory.title = categoryTitle
+                    newCategory.isSynced = "yes"
+                    let nodeId = categorySnap.key
+                    self.categories.append(newCategory)
+                    self.saveCategories(category: newCategory,nodeId: nodeId)
+
+                }
+            }
+        })
+        categoryTableView.reloadData()
     }
 
 
