@@ -36,7 +36,6 @@ class ViewController: UIViewController {
     
     //MARK: - Add Categories
     @objc func addTapped(){
-        print("button pressed")
         var textField = UITextField()
         let alert = UIAlertController(title: "Add new todo Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
@@ -45,10 +44,13 @@ class ViewController: UIViewController {
             let newCategory = Category(context: self.context)
             newCategory.title = textField.text!
             newCategory.isSynced = "No"
-            self.categories.append(newCategory)
+            if let check = self.checkifExists(category: newCategory) {
+                if !check.keys.first! {
+                    self.saveCategories(category: newCategory)
+                }
+                
+            }
             
-            
-            self.saveCategories(category: newCategory)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new Category"
@@ -63,7 +65,7 @@ class ViewController: UIViewController {
     func saveCategories(category: Category, nodeId: String? = nil){
         do {
             try context.save()
-            
+            self.categories.append(category)
             var nodeID = ref.childByAutoId().key
             if nodeId != nil {
                 nodeID = nodeId
@@ -96,10 +98,7 @@ class ViewController: UIViewController {
     }
     
     func loadCategories(with request:NSFetchRequest<Category> = Category.fetchRequest()){
-        
-        //let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "Yes")
-       // request.fetchLimit = 2
-        //request.predicate = predicate
+
         
         do {
             categories = try context.fetch(request)
@@ -145,8 +144,16 @@ class ViewController: UIViewController {
                     newCategory.title = categoryTitle
                     newCategory.isSynced = "Yes"
                     let nodeId = categorySnap.key
-                    self.checkifExists(category: newCategory,nodeID:nodeId)
                     
+                    if let check = self.checkifExists(category: newCategory) {
+                        if check.keys.first! {
+                            self.deleteCategory(category: check.values.first!)
+                        }
+                        
+                    }
+                    
+                    
+                    self.saveCategories(category: newCategory,nodeId: nodeId)
 
                 }
             }
@@ -154,19 +161,20 @@ class ViewController: UIViewController {
         
     }
     
-    func checkifExists(category: Category,nodeID:String){
+    func checkifExists(category: Category) -> Dictionary<Bool,Category>?{
         
         for checkCategory in categories {
             if checkCategory.title == category.title{
-                context.delete(checkCategory)
-                
-                categories.remove(at: categories.index(of: checkCategory)!)
-                
+                return [true:checkCategory]
             }
         }
-        self.categories.append(category)
-        self.saveCategories(category: category,nodeId: nodeID)
-        categoryTableView.reloadData()
+        
+        return [false:category]
+    }
+    
+    func deleteCategory(category: Category){
+        self.context.delete(category)
+        self.categories.remove(at: self.categories.index(of: category)!)
     }
 
 
