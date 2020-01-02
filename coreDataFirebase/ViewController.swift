@@ -46,7 +46,8 @@ class ViewController: UIViewController {
             newCategory.isSynced = "No"
             if let check = self.checkifExists(category: newCategory) {
                 if !check.keys.first! {
-                    self.saveCategories(category: newCategory)
+                    self.saveCategory(category: newCategory)
+                    
                 }
                 
             }
@@ -62,48 +63,23 @@ class ViewController: UIViewController {
     }
     
     //MARK: - CoreData Flow Methods
-    func saveCategories(category: Category, nodeId: String? = nil){
+    func saveCategoriesCoreData(category: Category){
         do {
             try context.save()
-            self.categories.append(category)
-            var nodeID = ref.childByAutoId().key
-            if nodeId != nil {
-                nodeID = nodeId
-            }
-            
-            self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced]) { (error, ref) in
-                    guard error == nil else {
-                        
-                        print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
-                    return
-                }
-                self.updateCategories(category: category)
-            }
-            
-            
+            category.isSynced = "yes"
         } catch {
             print("Error saving categories \(error)")
-        }
-        
-        categoryTableView.reloadData()
-    }
-    func updateCategories(category: Category){
-        category.isSynced = "yes"
-        do {
-            try context.save()
-            
-        } catch {
-            
         }
     }
     
     func loadCategories(with request:NSFetchRequest<Category> = Category.fetchRequest()){
-
+        
         
         do {
+            fetchFirebase()
             categories = try context.fetch(request)
             categoryTableView.reloadData()
-            fetchFirebase()
+            
             sendNonSyncedData()
             
             
@@ -113,6 +89,49 @@ class ViewController: UIViewController {
         
     }
     
+    func checkifExists(category: Category) -> Dictionary<Bool,Category>?{
+        
+        for checkCategory in categories {
+            if checkCategory.title == category.title{
+                return [true:checkCategory]
+            }
+        }
+        
+        return [false:category]
+    }
+    
+    func deleteCategory(category: Category){
+        self.context.delete(category)
+        self.categories.remove(at: self.categories.index(of: category)!)
+    }
+
+    
+    //MARK: - Backend Methods
+    func saveCategoriesBackend(category: Category, nodeId: String? = nil){
+        var nodeID = ref.childByAutoId().key
+        if nodeId != nil {
+            nodeID = nodeId
+        }
+        if let check = self.checkifExists(category: category) {
+            if check.keys.first! {
+                category.isSynced = "Yes"
+            }
+            
+            
+        }
+        self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced]) { (error, ref) in
+            guard error == nil else {
+                
+                print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
+                return
+            }
+            self.saveCategoriesCoreData(category: category)
+        }
+    }
+    
+    
+    
+    
     func sendNonSyncedData(){
         let request : NSFetchRequest<Category> = Category.fetchRequest()
         let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
@@ -121,7 +140,7 @@ class ViewController: UIViewController {
         do {
             nonSynced = try context.fetch(request)
             for category in nonSynced {
-                saveCategories(category: category)
+                saveCategoriesBackend(category: category)
             }
             
         } catch {
@@ -148,35 +167,27 @@ class ViewController: UIViewController {
                     if let check = self.checkifExists(category: newCategory) {
                         if check.keys.first! {
                             self.deleteCategory(category: check.values.first!)
+                            
                         }
                         
                     }
                     
                     
-                    self.saveCategories(category: newCategory,nodeId: nodeId)
-
+                    self.saveCategory(category: newCategory, nodeId: nodeId)
                 }
             }
         })
         
     }
-    
-    func checkifExists(category: Category) -> Dictionary<Bool,Category>?{
-        
-        for checkCategory in categories {
-            if checkCategory.title == category.title{
-                return [true:checkCategory]
-            }
-        }
-        
-        return [false:category]
-    }
-    
-    func deleteCategory(category: Category){
-        self.context.delete(category)
-        self.categories.remove(at: self.categories.index(of: category)!)
-    }
 
+    
+    func saveCategory(category: Category,nodeId: String? = nil){
+        self.saveCategoriesCoreData(category: category)
+        self.saveCategoriesBackend(category: category,nodeId: nodeId)
+        self.categories.append(category)
+        self.categoryTableView.reloadData()
+    }
+    
 
 }
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
