@@ -28,11 +28,38 @@ class ViewController: UIViewController {
         ref = Database.database().reference()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        
+    
         loadCategories()
 
         
     }
+    
+    //MARK: - Main saving Method
+    func saveCategory(category: Category,nodeId: String? = nil){
+        self.saveCategoriesCoreData(category: category)
+        self.saveCategoriesBackend(category: category,nodeId: nodeId)
+        self.categories.append(category)
+        self.categoryTableView.reloadData()
+    }
+    
+    //MARK: - Syncing Data
+    func sendNonSyncedData(){
+        let request : NSFetchRequest<Category> = Category.fetchRequest()
+        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
+        request.predicate = predicate
+        var nonSynced = [Category]()
+        do {
+            nonSynced = try context.fetch(request)
+            for category in nonSynced {
+                saveCategoriesBackend(category: category)
+            }
+            
+        } catch {
+            print("Can't save mobile saved data\(error)")
+        }
+        
+    }
+
     
     //MARK: - Add Categories
     @objc func addTapped(){
@@ -129,26 +156,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
-    
-    func sendNonSyncedData(){
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
-        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
-        request.predicate = predicate
-        var nonSynced = [Category]()
-        do {
-            nonSynced = try context.fetch(request)
-            for category in nonSynced {
-                saveCategoriesBackend(category: category)
-            }
-            
-        } catch {
-            print("Can't save mobile saved data\(error)")
-        }
-        
-    }
-    
     func fetchFirebase(){
         ref.child("Categories").observeSingleEvent(of: .value, with: { (snapshot) in
             for snap in snapshot.children {
@@ -179,14 +186,8 @@ class ViewController: UIViewController {
         })
         
     }
-
     
-    func saveCategory(category: Category,nodeId: String? = nil){
-        self.saveCategoriesCoreData(category: category)
-        self.saveCategoriesBackend(category: category,nodeId: nodeId)
-        self.categories.append(category)
-        self.categoryTableView.reloadData()
-    }
+    
     
 
 }
@@ -203,6 +204,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    //MARK: - TableView Delegate Methods
+    
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //self.saveCategory(category: categories[indexPath.row])
+        performSegue(withIdentifier: "goToItems", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ItemsVC
+        if let indexPath = categoryTableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categories[indexPath.row]
+        }
+    }
     
     
 }

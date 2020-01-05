@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Categories-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="coreDataFirebase" customModuleProvider="target" sceneMemberID="viewController">
@@ -46,17 +46,61 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="uTB-YO-WsN">
+                    <navigationItem key="navigationItem" title="Categories" id="uTB-YO-WsN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="u7E-mf-7aa"/>
                     </navigationItem>
                     <connections>
                         <outlet property="btnAddCategory" destination="u7E-mf-7aa" id="vUm-OY-fIu"/>
                         <outlet property="categoryTableView" destination="WRx-ov-JiK" id="ydA-hA-LX3"/>
+                        <segue destination="wTT-Sj-Ret" kind="show" identifier="goToItems" id="b3w-36-Ocr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1079.2" y="133.5832083958021"/>
+        </scene>
+        <!--Items-->
+        <scene sceneID="hfI-1a-FXr">
+            <objects>
+                <viewController id="wTT-Sj-Ret" customClass="ItemsVC" customModule="coreDataFirebase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JPU-pe-Ps4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vh1-Gs-XA8">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemCell" id="sYy-wP-jlc">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sYy-wP-jlc" id="BZ2-uF-UD5">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="wTT-Sj-Ret" id="ZtN-LM-bQh"/>
+                                    <outlet property="delegate" destination="wTT-Sj-Ret" id="7NY-OV-GD8"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="UPB-aN-rnz"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Items" id="ak4-H0-zyA">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mQA-NZ-iEO"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="btn_addItem" destination="mQA-NZ-iEO" id="JYb-21-08Y"/>
+                        <outlet property="tableView_items" destination="vh1-Gs-XA8" id="BN6-vQ-mKm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bRx-Ox-EDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1954.4000000000001" y="125.4872563718141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="89O-e1-GX7">
