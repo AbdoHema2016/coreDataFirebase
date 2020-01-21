@@ -16,6 +16,7 @@
 		9451D0CD23BB4345007DBF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CC23BB4345007DBF0E /* Assets.xcassets */; };
 		9451D0D023BB4345007DBF0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */; };
 		9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9469105F23C1E2E1002AE663 /* ItemsVC.swift */; };
+		94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		9451D0CF23BB4345007DBF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9451D0D123BB4346007DBF0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9469105F23C1E2E1002AE663 /* ItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsVC.swift; sourceTree = "<group>"; };
+		94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		98D5FA9B9751D95B5A69BDE9 /* Pods-coreDataFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.debug.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		B76A45949F0AC3E617BF82B9 /* Pods-coreDataFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.release.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +80,7 @@
 				94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */,
 				9451D0C223BB4345007DBF0E /* AppDelegate.swift */,
 				9451D0C423BB4345007DBF0E /* ViewController.swift */,
+				94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */,
 				9451D0C623BB4345007DBF0E /* Main.storyboard */,
 				9469105F23C1E2E1002AE663 /* ItemsVC.swift */,
 				9451D0CC23BB4345007DBF0E /* Assets.xcassets */,
@@ -216,6 +219,7 @@
 				9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */,
 				94394C4723BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld in Sources */,
 				9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */,
+				94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */,
 				9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

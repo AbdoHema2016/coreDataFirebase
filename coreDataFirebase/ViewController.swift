@@ -19,47 +19,20 @@ class ViewController: UIViewController {
     //MARK: - Variables
     var categories = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var ref: DatabaseReference!
-    
+    let categoryModel = CategoryModel()
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ref = Database.database().reference()
+        categoryModel.fetchFirebase(onSuccess: { response in
+            for i in response {
+                self.categories.append(i)
+            }
+            self.categoryTableView.reloadData()
+        })
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-    
-        loadCategories()
-
         
     }
-    
-    //MARK: - Main saving Method
-    func saveCategory(category: Category,nodeId: String? = nil){
-        self.saveCategoriesCoreData(category: category)
-        self.saveCategoriesBackend(category: category,nodeId: nodeId)
-        self.categories.append(category)
-        self.categoryTableView.reloadData()
-    }
-    
-    //MARK: - Syncing Data
-    func sendNonSyncedData(){
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
-        let predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
-        request.predicate = predicate
-        var nonSynced = [Category]()
-        do {
-            nonSynced = try context.fetch(request)
-            for category in nonSynced {
-                saveCategoriesBackend(category: category)
-            }
-            
-        } catch {
-            print("Can't save mobile saved data\(error)")
-        }
-        
-    }
-
     
     //MARK: - Add Categories
     @objc func addTapped(){
@@ -67,14 +40,26 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "Add new todo Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             // what will happen on tapping the action add button
-            
+            let date = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            let result = formatter.string(from: date)
             let newCategory = Category(context: self.context)
             newCategory.title = textField.text!
             newCategory.isSynced = "No"
-            if let check = self.checkifExists(category: newCategory) {
+            newCategory.lastUpdated = result
+            if let check = self.categoryModel.checkifExists(category: newCategory) {
                 if !check.keys.first! {
-                    self.saveCategory(category: newCategory)
+                    self.categoryModel.saveCategory(category: newCategory)
+                    self.categories.append(newCategory)
+                    self.categoryTableView.reloadData()
                     
+                } else {
+                    if self.categoryModel.checkifUpdated(category: newCategory.lastUpdated!) {
+                        self.categoryModel.saveCategory(category: newCategory)
+                        self.categories.append(newCategory)
+                        self.categoryTableView.reloadData()
+                    }
                 }
                 
             }
@@ -88,107 +73,6 @@ class ViewController: UIViewController {
         alert.addAction(action)
         present(alert,animated: true,completion: nil)
     }
-    
-    //MARK: - CoreData Flow Methods
-    func saveCategoriesCoreData(category: Category){
-        do {
-            try context.save()
-            category.isSynced = "yes"
-        } catch {
-            print("Error saving categories \(error)")
-        }
-    }
-    
-    func loadCategories(with request:NSFetchRequest<Category> = Category.fetchRequest()){
-        
-        
-        do {
-            fetchFirebase()
-            categories = try context.fetch(request)
-            categoryTableView.reloadData()
-            
-            sendNonSyncedData()
-            
-            
-        } catch {
-            print("error loading data \(error)")
-        }
-        
-    }
-    
-    func checkifExists(category: Category) -> Dictionary<Bool,Category>?{
-        
-        for checkCategory in categories {
-            if checkCategory.title == category.title{
-                return [true:checkCategory]
-            }
-        }
-        
-        return [false:category]
-    }
-    
-    func deleteCategory(category: Category){
-        self.context.delete(category)
-        self.categories.remove(at: self.categories.index(of: category)!)
-    }
-
-    
-    //MARK: - Backend Methods
-    func saveCategoriesBackend(category: Category, nodeId: String? = nil){
-        var nodeID = ref.childByAutoId().key
-        if nodeId != nil {
-            nodeID = nodeId
-        }
-        if let check = self.checkifExists(category: category) {
-            if check.keys.first! {
-                category.isSynced = "Yes"
-            }
-            
-            
-        }
-        self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced]) { (error, ref) in
-            guard error == nil else {
-                
-                print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
-                return
-            }
-            self.saveCategoriesCoreData(category: category)
-        }
-    }
-    
-    func fetchFirebase(){
-        ref.child("Categories").observeSingleEvent(of: .value, with: { (snapshot) in
-            for snap in snapshot.children {
-                let categorySnap = snap as! DataSnapshot
-                let categoryDict = categorySnap.value as! [String:String]
-                guard let categorySyncStatus = categoryDict["isSynced"] else {return}
-                //TODO: - updating item in firebase rewrites on core data
-                if categorySyncStatus == "No" {
-                    
-                    let categoryTitle = categoryDict["title"] ?? ""
-                    let newCategory = Category(context: self.context)
-                    newCategory.title = categoryTitle
-                    newCategory.isSynced = "Yes"
-                    let nodeId = categorySnap.key
-                    
-                    if let check = self.checkifExists(category: newCategory) {
-                        if check.keys.first! {
-                            self.deleteCategory(category: check.values.first!)
-                            
-                        }
-                        
-                    }
-                    
-                    
-                    self.saveCategory(category: newCategory, nodeId: nodeId)
-                }
-            }
-        })
-        
-    }
-    
-    
-    
 
 }
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
@@ -217,8 +101,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             destinationVC.selectedCategory = categories[indexPath.row]
         }
     }
-    
-    
 }
 
 
