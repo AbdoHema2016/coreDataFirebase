@@ -9,20 +9,19 @@
 /* Begin PBXBuildFile section */
 		6C2106A083BB56A1FAA0A5F7 /* Pods_coreDataFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */; };
 		94394C4423BB575B00EF4ADF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */; };
-		94394C4723BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */; };
 		9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C223BB4345007DBF0E /* AppDelegate.swift */; };
 		9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C423BB4345007DBF0E /* ViewController.swift */; };
 		9451D0C823BB4345007DBF0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0C623BB4345007DBF0E /* Main.storyboard */; };
 		9451D0CD23BB4345007DBF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CC23BB4345007DBF0E /* Assets.xcassets */; };
 		9451D0D023BB4345007DBF0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */; };
 		9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9469105F23C1E2E1002AE663 /* ItemsVC.swift */; };
+		94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */; };
 		94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreDataFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		9451D0BF23BB4345007DBF0E /* coreDataFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreDataFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9451D0C223BB4345007DBF0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9451D0C423BB4345007DBF0E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -31,6 +30,7 @@
 		9451D0CF23BB4345007DBF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9451D0D123BB4346007DBF0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9469105F23C1E2E1002AE663 /* ItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsVC.swift; sourceTree = "<group>"; };
+		94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		98D5FA9B9751D95B5A69BDE9 /* Pods-coreDataFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.debug.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		B76A45949F0AC3E617BF82B9 /* Pods-coreDataFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.release.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,11 +77,10 @@
 		9451D0C123BB4345007DBF0E /* coreDataFirebase */ = {
 			isa = PBXGroup;
 			children = (
-				94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */,
+				94B1563D23D84D410045C0EB /* Model */,
+				94B1563C23D84D390045C0EB /* View */,
+				94B1563B23D84D2A0045C0EB /* Controller */,
 				9451D0C223BB4345007DBF0E /* AppDelegate.swift */,
-				9451D0C423BB4345007DBF0E /* ViewController.swift */,
-				94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */,
-				9451D0C623BB4345007DBF0E /* Main.storyboard */,
 				9469105F23C1E2E1002AE663 /* ItemsVC.swift */,
 				9451D0CC23BB4345007DBF0E /* Assets.xcassets */,
 				9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */,
@@ -89,6 +88,31 @@
 				9451D0D123BB4346007DBF0E /* Info.plist */,
 			);
 			path = coreDataFirebase;
+			sourceTree = "<group>";
+		};
+		94B1563B23D84D2A0045C0EB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9451D0C423BB4345007DBF0E /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		94B1563C23D84D390045C0EB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9451D0C623BB4345007DBF0E /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		94B1563D23D84D410045C0EB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */,
+				94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F69B5976F8F8DCB2EC2AED7C /* Pods */ = {
@@ -217,8 +241,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */,
-				94394C4723BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld in Sources */,
 				9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */,
+				94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */,
 				94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */,
 				9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */,
 			);
@@ -422,12 +446,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		94394C4523BB578F00EF4ADF /* coreDataFirebase.xcdatamodeld */ = {
+		94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */,
+				94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */,
 			);
-			currentVersion = 94394C4623BB578F00EF4ADF /* coreDataFirebase.xcdatamodel */;
+			currentVersion = 94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */;
 			path = coreDataFirebase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -17,9 +17,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var categoryTableView: UITableView!
     
     //MARK: - Variables
-    var categories = [Category]()
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let categoryModel = CategoryModel()
+    var categories = [Category]()
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,40 +37,29 @@ class ViewController: UIViewController {
     
     //MARK: - Add Categories
     @objc func addTapped(){
-        var textField = UITextField()
+        var categoryTextField = UITextField()
+        var subTextField = UITextField()
         let alert = UIAlertController(title: "Add new todo Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
             // what will happen on tapping the action add button
-            let date = Date()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.yyyy"
-            let result = formatter.string(from: date)
-            let newCategory = Category(context: self.context)
-            newCategory.title = textField.text!
-            newCategory.isSynced = "No"
-            newCategory.lastUpdated = result
-            if let check = self.categoryModel.checkifExists(category: newCategory) {
-                if !check.keys.first! {
-                    self.categoryModel.saveCategory(category: newCategory)
-                    self.categories.append(newCategory)
-                    self.categoryTableView.reloadData()
-                    
-                } else {
-                    if self.categoryModel.checkifUpdated(category: newCategory.lastUpdated!) {
-                        self.categoryModel.saveCategory(category: newCategory)
-                        self.categories.append(newCategory)
-                        self.categoryTableView.reloadData()
-                    }
-                }
-                
-            }
+            self.categoryModel.addCategory(categoryName: categoryTextField.text!,subCategory: subTextField.text!, onSuccess: { response in
+                self.categories.append(response)
+                self.categoryTableView.reloadData()
+            })
+
             
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new Category"
-            textField = alertTextField
+            categoryTextField = alertTextField
             
         }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "add subCategory"
+            subTextField = alertTextField
+            
+        }
+        
         alert.addAction(action)
         present(alert,animated: true,completion: nil)
     }
