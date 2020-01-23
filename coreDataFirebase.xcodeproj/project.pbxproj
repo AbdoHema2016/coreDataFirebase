@@ -17,6 +17,7 @@
 		9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9469105F23C1E2E1002AE663 /* ItemsVC.swift */; };
 		94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */; };
 		94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */; };
+		94F59F4623D98ADF0034E490 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F59F4523D98ADF0034E490 /* ModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		9469105F23C1E2E1002AE663 /* ItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsVC.swift; sourceTree = "<group>"; };
 		94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		94F59F4523D98ADF0034E490 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		98D5FA9B9751D95B5A69BDE9 /* Pods-coreDataFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.debug.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		B76A45949F0AC3E617BF82B9 /* Pods-coreDataFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.release.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 		9451D0C123BB4345007DBF0E /* coreDataFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				94F59F4723D9A62C0034E490 /* Protocols */,
 				94B1563D23D84D410045C0EB /* Model */,
 				94B1563C23D84D390045C0EB /* View */,
 				94B1563B23D84D2A0045C0EB /* Controller */,
@@ -113,6 +116,14 @@
 				94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		94F59F4723D9A62C0034E490 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				94F59F4523D98ADF0034E490 /* ModelProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		F69B5976F8F8DCB2EC2AED7C /* Pods */ = {
@@ -245,6 +256,7 @@
 				94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */,
 				94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */,
 				9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */,
+				94F59F4623D98ADF0034E490 /* ModelProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

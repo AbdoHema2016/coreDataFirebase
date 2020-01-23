@@ -24,6 +24,13 @@ class ViewController: UIViewController {
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let categoriesf = Category.fetchObjects(in: context) { fetchRequest in
+            //Configuration code like adding predicates and sort descriptors
+        }
+        
+        print(categoriesf)
         categoryModel.fetchFirebase(onSuccess: { response in
             for i in response {
                 self.categories.append(i)
