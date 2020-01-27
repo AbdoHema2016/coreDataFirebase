@@ -18,10 +18,9 @@ class ViewController: UIViewController {
     
     //MARK: - Variables
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let categoryModel = CategoryModel()
     var categories = [Category]()
     var refreshControl = UIRefreshControl()
-    
+    let categoriesRepo = CategoryRepository()
     
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
@@ -48,21 +47,22 @@ class ViewController: UIViewController {
     
     //MARK: - Data population methods
     func getData(){
-        categories = categoryModel.fetchDataDevice()
+        categories = categoriesRepo.fetchObjects(in: context) { (request) in
+            
+        }
+        
         checkForBackEndData()
     }
     func checkForBackEndData(){
-       
-        let _ = categoryModel.fetchDataBackEnd(onSuccess: { response in
+        
+        categoriesRepo.fetchDataBackEnd(in: context) { (response) in
             for i in response {
                 self.categories.append(i)
             }
             if response.count > 0 {
                 self.showAlertNewData()
             }
-            
-            
-        })
+        }
         refreshControl.endRefreshing()
     }
     

@@ -46,11 +46,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Categories" id="uTB-YO-WsN">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u7E-mf-7aa"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Categories" id="uTB-YO-WsN"/>
                     <connections>
-                        <outlet property="btnAddCategory" destination="u7E-mf-7aa" id="vUm-OY-fIu"/>
                         <outlet property="categoryTableView" destination="WRx-ov-JiK" id="ydA-hA-LX3"/>
                         <segue destination="wTT-Sj-Ret" kind="show" identifier="goToItems" id="b3w-36-Ocr"/>
                     </connections>

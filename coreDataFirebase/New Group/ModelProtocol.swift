@@ -9,15 +9,18 @@
 import Foundation
 import CoreData
 
-extension Category: Managed {
-    
-    
+
+struct CategoryRepository: DeviceRepository,BackendRepository {
+    typealias BackEndModelType = Category
+    typealias ModelType = Category
 }
+extension Category: Managed {
+}
+
 protocol Managed: class {
     static var entityName: String { get }
-    
 }
 extension Managed where Self: NSManagedObject {
     static var entityName: String { return entity().name! }
-
 }
+

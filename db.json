@@ -1,0 +1,153 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "id": 2,
+      "title": "abdo",
+      "author": "abdo"
+    }
+  ],
+  "categories": [
+    {
+      "uniqueID": "212",
+      "title": "sadasd",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "das",
+      "uniqueID": "eweq",
+      "title": "nmvmxcv",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "das2",
+      "uniqueID": "ds",
+      "title": "Abdooo",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "das2e",
+      "uniqueID": "dsd",
+      "title": "Abdooo again",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2e",
+      "uniqueID": "dsewd",
+      "title": "Abdooo ewagain",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2we",
+      "uniqueID": "dsewdw",
+      "title": "Abdooo ewwwwagain",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2wde",
+      "uniqueID": "dseswdw",
+      "title": "Abdooo ewwwswagain",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2wede",
+      "uniqueID": "dseswdew",
+      "title": "Abdooo hhh",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2wdsede",
+      "uniqueID": "dsedaswdew",
+      "title": "Abdooo dsdhhh",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2wddsede",
+      "uniqueID": "dsedasswdew",
+      "title": "Abdooo gggg",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dase2wddewsede",
+      "uniqueID": "dsedasewswdew",
+      "title": "Abdooo ewewewe",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dasee2wddewsede",
+      "uniqueID": "dsedeasewswdew",
+      "title": "hihihi",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dasee2wdderwsede",
+      "uniqueID": "dsedeasrewswdew",
+      "title": "great",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dasee2wddderwsede",
+      "uniqueID": "dsedeasrdewswdew",
+      "title": "grdeat",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dasee2wdddderwsede",
+      "uniqueID": "dsedeasrdewsdwdew",
+      "title": "grdddeat",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    },
+    {
+      "id": "dasee2wdddderwesede",
+      "uniqueID": "dsedeasrdeewsdwdew",
+      "title": "fin",
+      "subCategory": "sdas",
+      "isSynced": false,
+      "lastUpdated": "dasdadas"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

@@ -65,7 +65,7 @@ class ItemsVC: UIViewController {
     @objc func addTapped(){
         var textField = UITextField()
         let alert = UIAlertController(title: "Add new todo Item", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+        _ = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // what will happen on tapping the action add button
             
             let newItem = Item(context: self.context)

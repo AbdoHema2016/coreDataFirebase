@@ -8,8 +8,10 @@
 
 import Foundation
 import CoreData
-import SwiftyJSON
-protocol Repository {
+
+
+
+protocol DeviceRepository {
     associatedtype ModelType: NSFetchRequestResult & Managed
      func fetchObjects(in context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<ModelType>) -> ()) -> [ModelType]
      func saveObjects(in context:NSManagedObjectContext,object: ModelType)
@@ -18,54 +20,10 @@ protocol Repository {
      func checkExistence(in context: NSManagedObjectContext,uniqueID: String) -> [ModelType]
      func checkUpdate(in context: NSManagedObjectContext,updateDate: String) -> [ModelType]
 }
-protocol BackendRepository {
-    associatedtype BackEndModelType: NSFetchRequestResult & Managed
 
-}
-extension BackendRepository {
-    
-    
-    func fetchDataBackEnd(in context: NSManagedObjectContext,onSuccess: (([BackEndModelType]) -> Void)?){
-        
-        
-        let categoryRequest = CategoryRequest()
-        let categoryRepo = CategoryRepository()
-        let categoryModel = CategoryModel()
-        let deviceObjects = categoryRepo.fetchObjects(in: context) { request in
-            
-        }
-        let _ = categoryRequest.fetchDataBackend(onSuccess: { result in
-            
-            let json = JSON(result)
-            
-            if let articles = json.array {
-                for i in articles {
-                    
-                    let category = categoryModel.loadFromJson(i)
-                    
-                    let checkExistence = categoryRepo.checkExistence(in: context, uniqueID: category.uniqueID!)
-                    if checkExistence.count > 0 {
-                        categoryRepo.saveObjects(in: context, object: checkExistence[0])
-                        //onSuccess?(checkExistence)
-                    }
-                    
-                }
-                
-                
-                
-            }
-        })
-        
-    }
-}
 
-struct CategoryRepository: Repository,BackendRepository {
-    typealias BackEndModelType = Category
-    typealias ModelType = Category
-    
-}
 
-extension Repository {
+extension DeviceRepository {
     
     
      func fetchObjects(in context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<ModelType>) -> ()) -> [ModelType] {
@@ -101,14 +59,14 @@ extension Repository {
     }
      func checkExistence(in context: NSManagedObjectContext,uniqueID: String) -> [ModelType] {
         let request = NSFetchRequest<ModelType>(entityName: ModelType.entityName)
-        request.predicate = NSPredicate(format: "uniqueID == %@", uniqueID)
+        request.predicate = NSPredicate(format: "uniqueID MATCHES %@", uniqueID)
         return try! context.fetch(request)
     }
     
     
      func checkUpdate(in context: NSManagedObjectContext,updateDate: String) -> [ModelType] {
         let request = NSFetchRequest<ModelType>(entityName: ModelType.entityName)
-        request.predicate = NSPredicate(format: "lastUpdated == %@", updateDate)
+        request.predicate = NSPredicate(format: "lastUpdated MATCHES %@", updateDate)
         return try! context.fetch(request)
     }
 }

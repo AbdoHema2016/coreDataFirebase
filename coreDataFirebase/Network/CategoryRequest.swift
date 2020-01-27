@@ -7,27 +7,36 @@
 //
 
 import Foundation
-import Alamofire
 
 class CategoryRequest {
     
-    func fetchDataBackend(onSuccess: ((Any) -> Void)?)
+    func fetchDataBackend(onSuccess: (([[String:Any]]) -> Void)?)
     {
-        var url:String!
-        url = "http://localhost:3000/categories"
         
-        Alamofire.request(url, method: .get, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                switch response.result{
-                case .success:
-                    
-                    let result = response.result.value
-                    onSuccess?(result)
-                    
-                case .failure(let error):
-                    print(error)
-                }
-        }
+        let urlString = "http://localhost:3000/categories"
+        
+        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+            
+            guard let data = data else { return }
+            
+            if let error = error {
+                print(error)
+                return
+            }
+           // let dataString = String(data: data, encoding: .utf8)
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                DispatchQueue.main.async(execute: { () -> Void in
+                    onSuccess?(json as! [[String:Any]])
+                })
+                
+            } catch {
+                
+            }
+            
+            
+        }) .resume()
+
     }
     
 }
