@@ -28,6 +28,7 @@ extension Managed where Self: NSManagedObject {
     
     func saveObjects(in context:NSManagedObjectContext,object: Self){
         do {
+            
             try context.save()
         } catch {
             print("Error saving Object \(error)")
@@ -45,7 +46,7 @@ extension Managed where Self: NSManagedObject {
     
     static func sendNonSynced(in context: NSManagedObjectContext) -> [Self] {
         let request = NSFetchRequest<Self>(entityName: Self.entityName)
-        request.predicate = NSPredicate(format: "isSynced CONTAINS[cd] %@", "No")
+        request.predicate = NSPredicate(format: "isSynced == %@", NSNumber(value: false))
         return try! context.fetch(request)
     }
     

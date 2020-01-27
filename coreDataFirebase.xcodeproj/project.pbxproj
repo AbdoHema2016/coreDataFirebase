@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6C2106A083BB56A1FAA0A5F7 /* Pods_coreDataFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */; };
+		9419220B23DED2F50030B9B0 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419220A23DED2F50030B9B0 /* CategoryRequest.swift */; };
+		9419220E23DF14650030B9B0 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419220D23DF14650030B9B0 /* CategoryRepository.swift */; };
 		94394C4423BB575B00EF4ADF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */; };
 		9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C223BB4345007DBF0E /* AppDelegate.swift */; };
 		9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451D0C423BB4345007DBF0E /* ViewController.swift */; };
@@ -15,13 +17,15 @@
 		9451D0CD23BB4345007DBF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CC23BB4345007DBF0E /* Assets.xcassets */; };
 		9451D0D023BB4345007DBF0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9451D0CE23BB4345007DBF0E /* LaunchScreen.storyboard */; };
 		9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9469105F23C1E2E1002AE663 /* ItemsVC.swift */; };
-		94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */; };
 		94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */; };
+		94E23DAC23DDC2BF00FB4483 /* coreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94E23DAA23DDC2BF00FB4483 /* coreData.xcdatamodeld */; };
 		94F59F4623D98ADF0034E490 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F59F4523D98ADF0034E490 /* ModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43CEAD9FBA0B2E9A70A8017C /* Pods_coreDataFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreDataFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9419220A23DED2F50030B9B0 /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
+		9419220D23DF14650030B9B0 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		94394C4323BB575B00EF4ADF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9451D0BF23BB4345007DBF0E /* coreDataFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreDataFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9451D0C223BB4345007DBF0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,8 +35,8 @@
 		9451D0CF23BB4345007DBF0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9451D0D123BB4346007DBF0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9469105F23C1E2E1002AE663 /* ItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsVC.swift; sourceTree = "<group>"; };
-		94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		94E23DAB23DDC2BF00FB4483 /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
 		94F59F4523D98ADF0034E490 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		98D5FA9B9751D95B5A69BDE9 /* Pods-coreDataFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.debug.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		B76A45949F0AC3E617BF82B9 /* Pods-coreDataFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreDataFirebase.release.xcconfig"; path = "Target Support Files/Pods-coreDataFirebase/Pods-coreDataFirebase.release.xcconfig"; sourceTree = "<group>"; };
@@ -58,6 +62,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9419220923DED2DA0030B9B0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9419220A23DED2F50030B9B0 /* CategoryRequest.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		9419220C23DF14490030B9B0 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				9419220D23DF14650030B9B0 /* CategoryRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		9451D0B623BB4344007DBF0E = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +99,8 @@
 		9451D0C123BB4345007DBF0E /* coreDataFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				9419220C23DF14490030B9B0 /* Repository */,
+				9419220923DED2DA0030B9B0 /* Network */,
 				94F59F4723D9A62C0034E490 /* Protocols */,
 				94B1563D23D84D410045C0EB /* Model */,
 				94B1563C23D84D390045C0EB /* View */,
@@ -112,8 +134,8 @@
 		94B1563D23D84D410045C0EB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				94E23DAA23DDC2BF00FB4483 /* coreData.xcdatamodeld */,
 				94BB8D9E23D6E32600AC9A3F /* CategoryModel.swift */,
-				94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -252,10 +274,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */,
+				9419220E23DF14650030B9B0 /* CategoryRepository.swift in Sources */,
 				9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */,
-				94B1564023D84D630045C0EB /* coreDataFirebase.xcdatamodeld in Sources */,
 				94BB8D9F23D6E32600AC9A3F /* CategoryModel.swift in Sources */,
 				9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */,
+				9419220B23DED2F50030B9B0 /* CategoryRequest.swift in Sources */,
+				94E23DAC23DDC2BF00FB4483 /* coreData.xcdatamodeld in Sources */,
 				94F59F4623D98ADF0034E490 /* ModelProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,13 +482,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		94B1563E23D84D630045C0EB /* coreDataFirebase.xcdatamodeld */ = {
+		94E23DAA23DDC2BF00FB4483 /* coreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */,
+				94E23DAB23DDC2BF00FB4483 /* coreDataFirebase.xcdatamodel */,
 			);
-			currentVersion = 94B1563F23D84D630045C0EB /* coreDataFirebase.xcdatamodel */;
-			path = coreDataFirebase.xcdatamodeld;
+			currentVersion = 94E23DAB23DDC2BF00FB4483 /* coreDataFirebase.xcdatamodel */;
+			path = coreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

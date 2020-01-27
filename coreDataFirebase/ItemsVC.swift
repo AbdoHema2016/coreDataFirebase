@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Firebase
 class ItemsVC: UIViewController {
     
     @IBOutlet weak var btn_addItem: UIBarButtonItem!
@@ -18,7 +17,6 @@ class ItemsVC: UIViewController {
     //MARK: - Variables
     var items = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var ref: DatabaseReference!
     var imagePicker: UIImagePickerController!
     var didSelectImage: ((UIImage) -> Void)?
     var selectedCategory: Category? {

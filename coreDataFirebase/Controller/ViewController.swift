@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Firebase
 
 class ViewController: UIViewController {
 
@@ -16,60 +15,65 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnAddCategory: UIBarButtonItem!
     @IBOutlet weak var categoryTableView: UITableView!
     
-    //MARK: - Variables
     
+    //MARK: - Variables
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let categoryModel = CategoryModel()
     var categories = [Category]()
+    var refreshControl = UIRefreshControl()
+    
+    
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        let categoriesf = Category.fetchObjects(in: context) { fetchRequest in
-            //Configuration code like adding predicates and sort descriptors
-        }
-        
-        print(categoriesf)
-        categoryModel.fetchFirebase(onSuccess: { response in
-            for i in response {
-                self.categories.append(i)
-            }
-            self.categoryTableView.reloadData()
-        })
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        getData()
+        self.categoryTableView.reloadData()
+        SetupRefreshControl()
         
     }
     
-    //MARK: - Add Categories
-    @objc func addTapped(){
-        var categoryTextField = UITextField()
-        var subTextField = UITextField()
-        let alert = UIAlertController(title: "Add new todo Category", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
-            // what will happen on tapping the action add button
-            self.categoryModel.addCategory(categoryName: categoryTextField.text!,subCategory: subTextField.text!, onSuccess: { response in
-                self.categories.append(response)
-                self.categoryTableView.reloadData()
-            })
-
-            
-        }
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new Category"
-            categoryTextField = alertTextField
-            
-        }
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "add subCategory"
-            subTextField = alertTextField
-            
-        }
-        
-        alert.addAction(action)
-        present(alert,animated: true,completion: nil)
+    
+    func SetupRefreshControl(){
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControl.Event.valueChanged)
+        categoryTableView.addSubview(refreshControl)
     }
+    
+    @objc func refresh(sender:AnyObject) {
+        // Code to refresh table view
+            checkForBackEndData()
+        
+    }
+    
+    //MARK: - Data population methods
+    func getData(){
+        categories = categoryModel.fetchDataDevice()
+        checkForBackEndData()
+    }
+    func checkForBackEndData(){
+       
+        let _ = categoryModel.fetchDataBackEnd(onSuccess: { response in
+            for i in response {
+                self.categories.append(i)
+            }
+            if response.count > 0 {
+                self.showAlertNewData()
+            }
+            
+            
+        })
+        refreshControl.endRefreshing()
+    }
+    
+    func showAlertNewData(){
+        let alert = UIAlertController(title: "Alert", message: "New Data Available", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Reload", style: .default, handler: { action in
+            self.categoryTableView.reloadData()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 
 }
 extension ViewController: UITableViewDataSource, UITableViewDelegate {

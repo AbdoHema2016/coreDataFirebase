@@ -6,6 +6,7 @@ target 'coreDataFirebase' do
   use_frameworks!
 
   # Pods for coreDataFirebase
-	pod 'Firebase/Database'
+	pod 'Alamofire', '~> 4.8.2'
+	pod 'SwiftyJSON', '~> 4.2.0'
 
 end

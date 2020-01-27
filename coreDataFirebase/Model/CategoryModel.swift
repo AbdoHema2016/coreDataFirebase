@@ -7,39 +7,32 @@
 //
 
 import Foundation
-import Firebase
 import CoreData
-class CategoryEntity :NSObject {
-    var uniqueID: String?
-    var title: String?
-    var subCategory: String?
-    var isSynced: String?
-    var lastUpdated: String?
-}
+import UIKit
+import SwiftyJSON
+
 class CategoryModel {
     
     //MARK:- Varaibles
-    var ref: DatabaseReference!
-    var categories = [CategoryEntity]()
     var coreDataCategories = [Category]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK:- Instance Method
-    func loadFromDictionary(_ dict: [String: AnyObject]) -> CategoryEntity {
-        let category = CategoryEntity()
-        if let data = dict["title"] as? String {
+    func loadFromJson(_ dict: JSON) -> Category {
+        let category = Category(context: self.context)
+        if let data = dict["title"].string  {
             category.title = data
         }
-        if let data = dict["isSynced"] as? String {
+        if let data = dict["isSynced"].bool {
             category.isSynced = data
         }
-        if let data = dict["lastUpdated"] as? String {
+        if let data = dict["lastUpdated"].string  {
             category.lastUpdated = data
         }
-        if let data = dict["subCategory"] as? String {
+        if let data = dict["subCategory"].string {
             category.subCategory = data
         }
-        if let data = dict["uniqueID"] as? String {
+        if let data = dict["uniqueID"].string {
             category.uniqueID = data
         }
         return category
@@ -50,65 +43,37 @@ class CategoryModel {
     //MARK: - Main saving Method (Local and Backend)
     func saveCategory(category: Category,nodeId: String? = nil){
         category.saveObjects(in: context, object: category)
-        self.saveCategoriesBackend(category: category,nodeId: nodeId)
+        //self.saveCategoriesBackend(category: category,nodeId: nodeId)
     }
     
     //MARK: - Adding Category Methods
     // A new category is created and checked if it's on the local and updated to add it
-    func createCategoryEntity(categoryName: String,subCategory: String) -> CategoryEntity{
+    func createCategoryEntity(categoryName: String,subCategory: String) -> Category{
         let date = getFormattedDate()
         let identifier = UUID()
-        let newCategory = CategoryEntity()
+        let newCategory = Category(context: self.context)
         newCategory.title = categoryName
         newCategory.uniqueID = identifier.uuidString
         newCategory.subCategory = subCategory
-        newCategory.isSynced = "No"
+        newCategory.isSynced = false
         newCategory.lastUpdated = date
         return newCategory
     }
     func addCategory(categoryName: String, subCategory:String, onSuccess: ((Category) -> Void)?){
         let newCategory = createCategoryEntity(categoryName: categoryName, subCategory: subCategory)
-        let (checkExistence,category) = self.checkifExist(category: newCategory)
-        if checkExistence {
-            let checkUpdated = self.checkifUpdated(updateDate: newCategory.lastUpdated!, category:category)
-            if checkUpdated {
-                category.deleteObject(in: context, object: category)
-                self.categories.append(newCategory)
-                self.saveCategory(category: category)
-                self.coreDataCategories.append(category)
-            }
+        let checkExistence = newCategory.checkifExist(in: self.context,objects: self.coreDataCategories, uniqueID: newCategory.uniqueID!, onSuccess: { checkedCategory in
             
-            
-        } else {
-            self.categories.append(newCategory)
-            self.saveCategory(category: category)
-            self.coreDataCategories.append(category)
+        })
+        if !checkExistence {
+            newCategory.saveObjects(in: self.context, object: newCategory)
+            //saveCategoriesBackend(category: newCategory)
+            onSuccess?(newCategory)
+        }
+        
+    }
 
-        }
-        onSuccess?(category)
-    }
-    func checkifExist(category: CategoryEntity) -> (Bool,Category) {
-        for checkCategory in coreDataCategories {
-            if category.uniqueID == checkCategory.uniqueID {
-                return (true,checkCategory)
-            }
-        }
-        let newCategory = Category(context: self.context)
-        newCategory.title = category.title
-        newCategory.isSynced = category.isSynced
-        newCategory.uniqueID = category.uniqueID
-        newCategory.subCategory = category.subCategory
-        newCategory.lastUpdated = category.lastUpdated
-        return (false,newCategory)
-    }
     
-    func checkifUpdated(updateDate: String,category: Category) -> Bool {
-        if updateDate != category.lastUpdated {
-            return true
-        }
-        return false
-    }
-    
+
     func getFormattedDate() -> String{
         let date = Date()
         let formatter = DateFormatter()
@@ -123,70 +88,46 @@ class CategoryModel {
     
     
     //MARK: - Backend Methods
-    func fetchFirebase(onSuccess: (([Category]) -> Void)?){
-        ref = Database.database().reference()
+    func fetchDataDevice() -> [Category]{
         coreDataCategories = Category.fetchObjects(in: context){ fetchRequest in
             //Configuration code like adding predicates and sort descriptors
         }
-        let nonSyncedCategories = Category.sendNonSynced(in: context)
-        for i in nonSyncedCategories {
-            i.saveObjects(in: context, object: i)
-            saveCategoriesBackend(category: i)
-        }
-        ref.child("Categories").observeSingleEvent(of: .value, with: { (snapshot) in
+        return coreDataCategories
+    }
+    func fetchDataBackEnd(onSuccess: (([Category]) -> Void)?){
+        let deviceCategories = fetchDataDevice()
+        var backEndCategories = [Category]()
+        let categoryRequest = CategoryRequest()
+        let _ = categoryRequest.fetchDataBackend(onSuccess: { result in
             
-            for snap in snapshot.children {
-                let categorySnap = snap as! DataSnapshot
-                let categoryDict = categorySnap.value as! [String:AnyObject]
-                let categoryEntity = self.loadFromDictionary(categoryDict)
-                let newCategory = Category(context: self.context)
-                newCategory.isSynced = categoryEntity.isSynced
-                newCategory.title = categoryEntity.title
-                newCategory.uniqueID = categoryEntity.uniqueID
-                newCategory.subCategory = categoryEntity.subCategory
-                newCategory.lastUpdated = categoryEntity.lastUpdated
-                var foundCategory = Category(context: self.context)
-                if newCategory.checkifExist(in: self.context,objects: self.coreDataCategories, uniqueID: categoryEntity.uniqueID!, onSuccess: { checkedCategory in
-                    foundCategory = checkedCategory
+        let json = JSON(result)
+            
+            if let articles = json.array {
+                for i in articles {
                     
-                }) {
-                    let checkifUpdated = foundCategory.checkifUpdated(updateDate: categoryEntity.lastUpdated!, object: foundCategory)
-                    if checkifUpdated {
+                   let category = self.loadFromJson(i)
+                    
+                    let checkExistence = category.checkifExist(in: self.context,objects: deviceCategories, uniqueID: category.uniqueID!, onSuccess: { checkedCategory in
                         
-                        foundCategory.deleteObject(in: self.context, object: foundCategory)
-                        if let index = self.coreDataCategories.index(where: {$0.uniqueID == foundCategory.uniqueID}) {
-                            self.coreDataCategories.remove(at: index)
-                        }
-                        newCategory.saveObjects(in: self.context, object: newCategory)
-                        self.coreDataCategories.append(newCategory)
+                    })
+                    if !checkExistence {
+                        category.saveObjects(in: self.context, object: category)
+                        backEndCategories.append(category)
                     }
                     
-                } else {
-                    newCategory.saveObjects(in: self.context, object: newCategory)
-                    self.coreDataCategories.append(newCategory)
+                    
                 }
                 
+                
+                onSuccess?(backEndCategories)
             }
-            onSuccess?(self.coreDataCategories)
         })
-        
+      
     }
     
     func saveCategoriesBackend(category: Category, nodeId: String? = nil){
-        var nodeID = ref.childByAutoId().key
-        if nodeId != nil {
-            nodeID = nodeId
-        }
-        category.setValue("yes", forKey: "isSynced")
-        self.ref.child("Categories").child(nodeID!).setValue(["title": category.title,"isSynced":category.isSynced,"lastUpdated":category.lastUpdated,"subCategory":category.subCategory,"uniqueID":category.uniqueID]) { (error, ref) in
-            guard error == nil else {
-                
-                print("error saving into firebase\(error?.localizedDescription ?? "something went Wrong")")
-                return
-            }
-            
-            category.saveObjects(in: self.context, object: category)
-        }
+
+        
     }
 
 }
