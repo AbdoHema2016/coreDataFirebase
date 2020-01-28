@@ -17,24 +17,16 @@ protocol BackendRepository {
 extension BackendRepository {
     
     //MARK:- Instance Method
-    func loadFromJson(_ dict: [String:Any],in context: NSManagedObjectContext) -> CategoryRepository.ModelType {
+    func loadFromJson(_ dict: [String:Any],in context: NSManagedObjectContext,onSuccess: ((CategoryRepository.ModelType) -> Void)?) {
         let category = CategoryRepository.ModelType(context: context)
-        if let data = dict["title"]  {
-            category.title = data as? String
+        for (k, v) in dict {
+            
+                category.setValue(v, forKey: k)
+            
+            
         }
-        if let data = dict["isSynced"] {
-            category.isSynced = data as! Bool
-        }
-        if let data = dict["lastUpdated"]  {
-            category.lastUpdated = data as? String
-        }
-        if let data = dict["subCategory"] {
-            category.subCategory = data as? String
-        }
-        if let data = dict["uniqueID"] {
-            category.uniqueID = data as? String
-        }
-        return category
+       onSuccess?(category)
+        
     }
     
     func fetchDataBackEnd(in context: NSManagedObjectContext,onSuccess: (([CategoryRepository.ModelType]) -> Void)?){
@@ -43,21 +35,24 @@ extension BackendRepository {
         let categoryRequest = CategoryRequest()
         let categoryRepo = CategoryRepository()
         var categories = [CategoryRepository.ModelType]()
-        
+        var category = CategoryRepository.ModelType()
         
         let _ = categoryRequest.fetchDataBackend(onSuccess: { result in
             
             
                 for i in result {
                     context.rollback()
-                    let category = self.loadFromJson(i, in: context)
+                    let _ = self.loadFromJson(i, in: context, onSuccess: {result in
+                        category = result
+                        let checkExistence = categoryRepo.checkExistence(in: context, uniqueID: category.uniqueID!)
+                        if checkExistence.count == 1 {
+                            categoryRepo.saveObjects(in: context, object: category)
+                            categories.append(category)
+                            
+                        }
+                    })
                     
-                    let checkExistence = categoryRepo.checkExistence(in: context, uniqueID: category.uniqueID!)
-                    if checkExistence.count == 1 {
-                        categoryRepo.saveObjects(in: context, object: category)
-                        categories.append(category)
-                        
-                    }
+                   
                     
                 
                 

@@ -23,6 +23,7 @@ class CategoryRequest {
                 print(error)
                 return
             }
+            
            // let dataString = String(data: data, encoding: .utf8)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)

@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 class DataStack{
     // MARK: - Core Data stack
-    
+    static let sharedInstance = DataStack()
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -32,6 +32,8 @@ class DataStack{
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
+                
+                
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })

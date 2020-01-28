@@ -16,9 +16,10 @@ class ItemsVC: UIViewController {
     
     //MARK: - Variables
     var items = [Item]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var imagePicker: UIImagePickerController!
     var didSelectImage: ((UIImage) -> Void)?
+    let context = DataStack().persistentContainer.viewContext
+    
     var selectedCategory: Category? {
         didSet {
             loadItems()
@@ -32,7 +33,6 @@ class ItemsVC: UIViewController {
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         

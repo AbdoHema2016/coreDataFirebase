@@ -17,7 +17,8 @@ class ViewController: UIViewController {
     
     
     //MARK: - Variables
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let context = DataStack().persistentContainer.viewContext
+    
     var categories = [Category]()
     var refreshControl = UIRefreshControl()
     let categoriesRepo = CategoryRepository()
