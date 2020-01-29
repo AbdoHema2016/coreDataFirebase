@@ -13,11 +13,13 @@ import CoreData
 
 protocol DeviceRepository {
     associatedtype ModelType: NSFetchRequestResult & Managed
+    var uniqueID: String { get }
+    var isSynced: String { get }
      func fetchObjects(in context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<ModelType>) -> ()) -> [ModelType]
      func saveObjects(in context:NSManagedObjectContext,object: ModelType)
      func deleteObject(in context: NSManagedObjectContext, object: ModelType)
      func sendNonSynced(in context: NSManagedObjectContext) -> [ModelType]
-     func checkExistence(in context: NSManagedObjectContext,uniqueID: String) -> [ModelType]
+     func checkExistence(in context: NSManagedObjectContext,objectUniqueID: String) -> [ModelType]
      func checkUpdate(in context: NSManagedObjectContext,updateDate: String) -> [ModelType]
 }
 
@@ -54,12 +56,12 @@ extension DeviceRepository {
     
      func sendNonSynced(in context: NSManagedObjectContext) -> [ModelType] {
         let request = NSFetchRequest<ModelType>(entityName: ModelType.entityName)
-        request.predicate = NSPredicate(format: "isSynced == %@", NSNumber(value: false))
+        request.predicate = NSPredicate(format: "\(isSynced) == %@", NSNumber(value: false))
         return try! context.fetch(request)
     }
-     func checkExistence(in context: NSManagedObjectContext,uniqueID: String) -> [ModelType] {
+     func checkExistence(in context: NSManagedObjectContext,objectUniqueID: String) -> [ModelType] {
         let request = NSFetchRequest<ModelType>(entityName: ModelType.entityName)
-        request.predicate = NSPredicate(format: "uniqueID MATCHES %@", uniqueID)
+        request.predicate = NSPredicate(format: "\(uniqueID) MATCHES %@", objectUniqueID)
         return try! context.fetch(request)
     }
     

@@ -11,55 +11,34 @@ import CoreData
 
 protocol BackendRepository {
     associatedtype BackEndModelType: NSFetchRequestResult & Managed
-    func fetchDataBackEnd(in context: NSManagedObjectContext,onSuccess: (([CategoryRepository.ModelType]) -> Void)?)
+    var uniqueID: String { get }
+    var url: String { get }
+    func fetchDataBackEnd(onSuccess: (([[String : Any]]) -> Void)?)
+    func loadFromJson(_ dict: [String:Any],in context: NSManagedObjectContext,with object:NSManagedObject,onSuccess: ((NSManagedObject) -> Void)?) 
     
 }
 extension BackendRepository {
     
     //MARK:- Instance Method
-    func loadFromJson(_ dict: [String:Any],in context: NSManagedObjectContext,onSuccess: ((CategoryRepository.ModelType) -> Void)?) {
-        let category = CategoryRepository.ModelType(context: context)
+    func loadFromJson(_ dict: [String:Any],in context: NSManagedObjectContext,with object:NSManagedObject,onSuccess: ((NSManagedObject) -> Void)?) {
         for (k, v) in dict {
-            
-                category.setValue(v, forKey: k)
-            
-            
+            if object.entity.propertiesByName.keys.contains(k){
+               object.setValue(v, forKey: k)
+            }
         }
-       onSuccess?(category)
-        
+        if object.value(forKey: uniqueID) != nil{
+           onSuccess?(object)
+        }
+       
     }
     
-    func fetchDataBackEnd(in context: NSManagedObjectContext,onSuccess: (([CategoryRepository.ModelType]) -> Void)?){
+    func fetchDataBackEnd(onSuccess: (([[String : Any]]) -> Void)?){
         
         
         let categoryRequest = CategoryRequest()
-        let categoryRepo = CategoryRepository()
-        var categories = [CategoryRepository.ModelType]()
-        var category = CategoryRepository.ModelType()
-        
-        let _ = categoryRequest.fetchDataBackend(onSuccess: { result in
+        let _ = categoryRequest.fetchDataBackend(urlString: url, onSuccess: { result in
             
-            
-                for i in result {
-                    context.rollback()
-                    let _ = self.loadFromJson(i, in: context, onSuccess: {result in
-                        category = result
-                        let checkExistence = categoryRepo.checkExistence(in: context, uniqueID: category.uniqueID!)
-                        if checkExistence.count == 1 {
-                            categoryRepo.saveObjects(in: context, object: category)
-                            categories.append(category)
-                            
-                        }
-                    })
-                    
-                   
-                    
-                
-                
-                
-                
-            }
-            onSuccess?(categories)
+            onSuccess?(result)
         })
         
     }

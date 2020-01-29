@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+
 class DataStack{
     // MARK: - Core Data stack
     static let sharedInstance = DataStack()

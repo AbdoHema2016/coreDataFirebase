@@ -10,10 +10,10 @@ import Foundation
 
 class CategoryRequest {
     
-    func fetchDataBackend(onSuccess: (([[String:Any]]) -> Void)?)
+    func fetchDataBackend(urlString: String, onSuccess: (([[String:Any]]) -> Void)?)
     {
         
-        let urlString = "http://localhost:3000/categories"
+        
         
         URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
             
@@ -24,7 +24,6 @@ class CategoryRequest {
                 return
             }
             
-           // let dataString = String(data: data, encoding: .utf8)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
                 DispatchQueue.main.async(execute: { () -> Void in

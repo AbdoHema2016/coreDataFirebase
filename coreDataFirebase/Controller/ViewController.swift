@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     var categories = [Category]()
     var refreshControl = UIRefreshControl()
-    let categoriesRepo = CategoryRepository()
+    let categoriesRepo = CategoryRepository(url: "http://localhost:3000/categories", isSynced: "isSynced", uniqueID: "uniqueID")
     
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
@@ -55,15 +55,29 @@ class ViewController: UIViewController {
         checkForBackEndData()
     }
     func checkForBackEndData(){
-        
-        categoriesRepo.fetchDataBackEnd(in: context) { (response) in
+        var backendCategories = [Category]()
+        categoriesRepo.fetchDataBackEnd() { (response) in
             for i in response {
-                self.categories.append(i)
+                var newCategory = Category(context: self.context)
+                self.categoriesRepo.loadFromJson(i, in: self.context, with: newCategory, onSuccess: { (result) in
+                    newCategory = result as! Category
+                    if let _ = newCategory.uniqueID {
+                        let c = self.categoriesRepo.checkExistence(in: self.context, objectUniqueID: newCategory.uniqueID!)
+                        if c.count == 1 {
+                            self.categoriesRepo.saveObjects(in: self.context, object: result as! Category)
+                            backendCategories.append(result as! Category)
+                        }
+                    }
+                })
             }
-            if response.count > 0 {
+            if backendCategories.count > 0 {
+                for i  in backendCategories {
+                    self.categories.append(i)
+                }
                 self.showAlertNewData()
             }
         }
+
         refreshControl.endRefreshing()
     }
     
