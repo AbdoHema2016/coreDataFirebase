@@ -17,15 +17,17 @@ class ViewController: UIViewController {
     
     
     //MARK: - Variables
-    let context = DataStack().persistentContainer.viewContext
+   
+    var context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     
     var categories = [Category]()
     var refreshControl = UIRefreshControl()
-    let categoriesRepo = CategoryRepository(url: "http://localhost:3000/categories", isSynced: "isSynced", uniqueID: "uniqueID")
+    let categoriesRepo = CategoryRepository(coreDataStoreName: "coreData", url: "http://localhost:3000/categories", isSynced: "isSynced", uniqueID: "uniqueID")
     
     //MARK: - View Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        context = categoriesRepo.managedObjectContext
         
         getData()
         self.categoryTableView.reloadData()

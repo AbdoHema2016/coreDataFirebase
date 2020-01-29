@@ -18,8 +18,7 @@ class ItemsVC: UIViewController {
     var items = [Item]()
     var imagePicker: UIImagePickerController!
     var didSelectImage: ((UIImage) -> Void)?
-    let context = DataStack().persistentContainer.viewContext
-    
+    var context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     var selectedCategory: Category? {
         didSet {
             loadItems()

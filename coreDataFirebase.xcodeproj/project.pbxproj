@@ -19,7 +19,6 @@
 		9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9469105F23C1E2E1002AE663 /* ItemsVC.swift */; };
 		94BEBB3B23DF79A900D2C893 /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEBB3A23DF79A900D2C893 /* ModelProtocol.swift */; };
 		94E23DAC23DDC2BF00FB4483 /* coreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94E23DAA23DDC2BF00FB4483 /* coreData.xcdatamodeld */; };
-		94EB73A523E02D6D009A3E8C /* DataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EB73A423E02D6D009A3E8C /* DataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +36,6 @@
 		9469105F23C1E2E1002AE663 /* ItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsVC.swift; sourceTree = "<group>"; };
 		94BEBB3A23DF79A900D2C893 /* ModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		94E23DAB23DDC2BF00FB4483 /* coreDataFirebase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreDataFirebase.xcdatamodel; sourceTree = "<group>"; };
-		94EB73A423E02D6D009A3E8C /* DataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +69,6 @@
 			children = (
 				9419220D23DF14650030B9B0 /* DeviceRepository.swift */,
 				9419220F23DF37E70030B9B0 /* BackendRepository.swift */,
-				94EB73A423E02D6D009A3E8C /* DataStack.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -220,7 +217,6 @@
 				9419221023DF37E70030B9B0 /* BackendRepository.swift in Sources */,
 				94BEBB3B23DF79A900D2C893 /* ModelProtocol.swift in Sources */,
 				9451D0C523BB4345007DBF0E /* ViewController.swift in Sources */,
-				94EB73A523E02D6D009A3E8C /* DataStack.swift in Sources */,
 				9419220E23DF14650030B9B0 /* DeviceRepository.swift in Sources */,
 				9451D0C323BB4345007DBF0E /* AppDelegate.swift in Sources */,
 				9469106023C1E2E2002AE663 /* ItemsVC.swift in Sources */,

@@ -11,12 +11,14 @@ import CoreData
 
 
 struct CategoryRepository: DeviceRepository,BackendRepository {
+    var coreDataStoreName: String
     var url: String
     var isSynced: String
     var uniqueID: String
     typealias BackEndModelType = Category
     typealias ModelType = Category
 }
+
 extension Category: Managed {
 }
 
