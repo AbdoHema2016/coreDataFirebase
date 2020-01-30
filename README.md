@@ -1,15 +1,21 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+This Project utilizes core data saving mechanism as a caching method for data retrieved from the server in a protocol oriented programming way
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process
+       Take the Device Repo,Backend Repo and Model Protocols and import them to your project
 2.	Software dependencies
+        None
 3.	Latest releases
 4.	API references
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+    -Start by creating your core data model with your entities & attributes
+    once done, 
+    create a struct to conform to the Managed protocol ,Device Repo and BackEnd Repo protocols both responsible for the CRUD operations 
+    Then from Where ever you want to fetch, cache and save data use an object of that struct to achieve that
+    you have the option of checking of new ids from the server and compare them to the ones on your device or you can check the last update but you will need to have that key on the server as well and get the new data afterwards
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
