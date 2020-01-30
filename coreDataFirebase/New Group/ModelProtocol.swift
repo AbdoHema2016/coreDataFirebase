@@ -23,7 +23,7 @@ extension Category: Managed {
 }
 
 protocol Managed: class {
-    static var entityName: String { get }
+    static var entityName: String { get } 
 }
 extension Managed where Self: NSManagedObject {
     static var entityName: String { return entity().name! }
